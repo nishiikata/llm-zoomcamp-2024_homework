@@ -1,0 +1,155 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/scratchpads/mage_version.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: mage_version
+  retry_config: null
+  status: updated
+  timeout: null
+  type: scratchpad
+  upstream_blocks: []
+  uuid: mage_version
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/data_loaders/parse_faq_llm.py
+  downstream_blocks:
+  - chunk_custom
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: parse_faq_llm
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: parse_faq_llm
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/transformers/chunk_custom.py
+  downstream_blocks:
+  - token_dummy
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: chunk_custom
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - parse_faq_llm
+  uuid: chunk_custom
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/transformers/token_dummy.py
+  downstream_blocks:
+  - export_to_elasticsearch
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: token_dummy
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - chunk_custom
+  uuid: token_dummy
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/data_exporters/export_to_elasticsearch.py
+  downstream_blocks:
+  - query_cohort
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_to_elasticsearch
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - token_dummy
+  uuid: export_to_elasticsearch
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    file_source:
+      path: rager/custom/query_cohort.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: query_cohort
+  retry_config: null
+  status: executed
+  timeout: null
+  type: custom
+  upstream_blocks:
+  - export_to_elasticsearch
+  uuid: query_cohort
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: rager/markdowns/reindexing_pipeline.md
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: markdown
+  name: reindexing_pipeline
+  retry_config: null
+  status: updated
+  timeout: null
+  type: markdown
+  upstream_blocks: []
+  uuid: reindexing_pipeline
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-08-18 13:45:54.506635+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: llm_zoomcamp_hw5
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: llm_zoomcamp_hw5
+variables:
+  connection_string: http://elasticsearch:9200
+  index_name: documents_20240824_4449_20240824_5209_20240824_0001_20240824_0041_20240824_0108
+variables_dir: /home/src/mage_data/rager
+widgets: []
